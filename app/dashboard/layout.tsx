@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "../lib/firebase";
 import { signOut } from "firebase/auth";
 import TeamRoles, { teamMembers } from "../components/TeamRoles";
+import { NavBar } from "../components/Navbar";
 
 export default function DashboardLayout({
   children,
@@ -19,9 +20,9 @@ export default function DashboardLayout({
   console.log(user);
 
   return (
-    <div className="flex h-screen bg-gray-100 w-[100dvw]">
-      <Sidebar />
-      <main className="w-[calc(100dvw-256px)] overflow-y-auto">{children}</main>
+    <div className="grid grid-row-[auto_1fr] h-screen bg-gray-100 w-[100dvw]">
+      <NavBar />
+      <main className="grid grid-cols-[auto_1fr] ">{children}</main>
     </div>
   );
 }

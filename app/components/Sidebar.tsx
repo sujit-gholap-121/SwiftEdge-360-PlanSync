@@ -30,7 +30,7 @@ export default function Sidebar() {
        
       </div> */}
       <div
-        className={`flex flex-col  w-64 bg-gray-800 h-screen group/sidebar ${
+        className={`flex flex-col flex-grow-0 w-64 bg-gray-800 h-screen group/sidebar ${
           collapseSidepanel ? "max-w-[2px] translate-x-3" : ""
         }`}
       >
