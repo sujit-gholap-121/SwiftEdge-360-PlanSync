@@ -6,6 +6,8 @@ import {
   CalendarIcon,
   ChartBarIcon,
   BellIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 
@@ -28,19 +30,23 @@ export default function Sidebar() {
        
       </div> */}
       <div
-        className={`flex flex-col  w-64 bg-gray-800 h-screen group/item ${
+        className={`flex flex-col  w-64 bg-gray-800 h-screen group/sidebar ${
           collapseSidepanel ? "max-w-[2px] translate-x-3" : ""
         }`}
       >
         <button
           className={`${
             collapseSidepanel
-              ? "bg-white self-center"
-              : "invisible group-hover/item:visible"
+              ? "bg-blue-50 text-black self-center"
+              : "text-blue-50 invisible group-hover/sidebar:visible"
           } self-end  border translate-y-5 rounded-full `}
           onClick={() => setCollapsePanel((prev) => !prev)}
         >
-          Coll
+          {collapseSidepanel ? (
+            <ChevronRightIcon className="h-4 w-4" />
+          ) : (
+            <ChevronLeftIcon className="h-4 w-4" />
+          )}
         </button>
         <div className={`${panelCss}`}>
           <div className="flex items-center justify-center h-16 px-4">

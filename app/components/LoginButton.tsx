@@ -4,10 +4,12 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { useRouter } from "next/navigation";
 import { useSetUserLoginInfo } from "../hooks/useUserLogin";
+import { useSetModalPopupAtom } from "../hooks/useLoginPopupModal";
 
 export default function LoginForm() {
   const router = useRouter();
   const setUserLoginInfo = useSetUserLoginInfo();
+  const setLoginModalPopup = useSetModalPopupAtom();
 
   const handleLogin = async () => {
     try {
@@ -16,17 +18,10 @@ export default function LoginForm() {
 
       if (result.user) {
         setUserLoginInfo(result.user);
+        setLoginModalPopup(false);
       }
     } catch (error) {
       console.error("Error signing in:", error);
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-    } catch (error) {
-      console.error("Error signing out:", error);
     }
   };
 

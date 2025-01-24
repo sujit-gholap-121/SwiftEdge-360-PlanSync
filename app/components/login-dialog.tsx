@@ -5,22 +5,26 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useAuth } from "./AuthProvider";
 import LoginForm from "./LoginButton";
 import { User } from "firebase/auth";
+import {
+  useModalPopupAtom,
+  useSetModalPopupAtom,
+} from "../hooks/useLoginPopupModal";
 
 export function LoginDialog() {
-  const [isLoginOpen, setLoginDialogOpen] = useState(true);
+  const isModalOpen = useModalPopupAtom();
+  const setLoginDialogOpen = useSetModalPopupAtom();
   const { user, loading } = useAuth();
-  const [state, setState] = useState<User | null>(null);
 
-  useEffect(() => {
-    if (!user) {
-      setLoginDialogOpen(true);
-    } else {
-      setLoginDialogOpen(false);
-    }
-  }, [user, loading, setLoginDialogOpen]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     setLoginDialogOpen(true);
+  //   } else {
+  //     setLoginDialogOpen(false);
+  //   }
+  // }, [user, loading, setLoginDialogOpen]);
 
   return (
-    <Dialog.Root open={isLoginOpen} onOpenChange={setLoginDialogOpen}>
+    <Dialog.Root open={isModalOpen} onOpenChange={setLoginDialogOpen}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50" />
         <Dialog.Content
