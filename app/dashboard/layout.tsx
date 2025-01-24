@@ -19,7 +19,7 @@ export default function DashboardLayout({
   console.log(user);
 
   return (
-    <div className="flex h-screen bg-gray-100 w-fit">
+    <div className="flex h-screen bg-gray-100 w-[100dvw]">
       <Sidebar />
       <main className="w-[calc(100dvw-256px)] overflow-y-auto">{children}</main>
     </div>
