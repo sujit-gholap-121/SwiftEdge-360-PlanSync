@@ -149,6 +149,8 @@ const epicColors = {
   Infrastructure: "bg-gray-100 text-gray-800",
 };
 
+type epicColorKeys = keyof typeof epicColors;
+
 export default function KanbanBoard() {
   const [columns, setColumns] = useState(initialColumns);
   const [expandedTask, setExpandedTask] = useState<string | null>(null);
@@ -206,11 +208,11 @@ export default function KanbanBoard() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-4 p-4 overflow-x-auto min-h-fit">
+      <div className="flex gap-4 p-4 overflow-x-auto min-h-fit flex-wrap justify-between">
         {Object.values(columns).map((column) => (
           <div
             key={column.id}
-            className="w-80 flex flex-col bg-gray-50 rounded-lg"
+            className="w-78 flex flex-col bg-gray-50 rounded-lg"
           >
             <div className="p-4 bg-gray-100 rounded-t-lg">
               <div className="flex justify-between items-center">
@@ -257,7 +259,7 @@ export default function KanbanBoard() {
                                 <TagIcon className="h-4 w-4 text-gray-500" />
                                 <span
                                   className={`text-xs px-2 py-1 rounded-full ${
-                                    epicColors[task.epic]
+                                    epicColors[task.epic as epicColorKeys]
                                   }`}
                                 >
                                   {task.epic}

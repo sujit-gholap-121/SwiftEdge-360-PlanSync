@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "./AuthProvider";
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { GoogleAuthProvider, signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { PhotoIcon } from "@heroicons/react/24/outline";
 import { useUserLoginInfo } from "../hooks/useUserLogin";
 import {
   useModalPopupAtom,
@@ -13,8 +13,9 @@ import {
 
 export const UserProfileGroup = () => {
   const userInfo = useUserLoginInfo();
+  const { user } = userInfo;
   const isLoginModalOpen = useModalPopupAtom();
-  const [isDropdownOpen, setIsDropdownOpen] = useState(userInfo ? true : false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(user ? true : false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const setLoginModalPopup = useSetModalPopupAtom();
@@ -45,40 +46,33 @@ export const UserProfileGroup = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
-  console.log(userInfo, isLoginModalOpen, showProfileModal);
+
+  const shouldLoadIcon =
+    typeof window !== "undefined" &&
+    !!JSON.parse(sessionStorage.getItem("firebaseUser") || "");
+  console.log(user, shouldLoadIcon, showProfileModal);
   return (
     <div className=" top-4 right-4">
-      {!userInfo ? (
-        <button
-          onClick={() => setLoginModalPopup(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
-        >
-          Sign in
-        </button>
-      ) : (
+      {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            {userInfo?.photoURL ? (
+            {shouldLoadIcon && user ? (
               <img
                 onMouseEnter={() => {
                   console.log("enter");
                   setShowProfileModal(true);
                 }}
                 // onMouseLeave={() => setShowProfileModal(false)}
-                src={userInfo.photoURL}
+                src={user?.photoURL || ""}
                 alt="Profile"
                 className="w-8 h-8 rounded-full"
               />
             ) : (
               <UserCircleIcon
-                onMouseEnter={() => {
-                  console.log("enter");
-                  setShowProfileModal(true);
-                }}
-                onMouseLeave={() => setShowProfileModal(false)}
+                onClick={() => setLoginModalPopup(true)}
                 className="w-8 h-8 text-gray-600"
               />
             )}
@@ -91,9 +85,9 @@ export const UserProfileGroup = () => {
             >
               <div className="px-4 py-2 border-b">
                 <p className="text-sm font-medium text-gray-900">
-                  {userInfo?.displayName}
+                  {user?.displayName}
                 </p>
-                <p className="text-sm text-gray-500">{userInfo?.email}</p>
+                <p className="text-sm text-gray-500">{user?.email}</p>
               </div>
               <a
                 href="/profile"
@@ -110,7 +104,7 @@ export const UserProfileGroup = () => {
             </div>
           )}
         </div>
-      )}
+      }
     </div>
   );
 };

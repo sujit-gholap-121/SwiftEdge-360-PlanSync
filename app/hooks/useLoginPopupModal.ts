@@ -7,5 +7,3 @@ import { selectAtom } from "jotai/utils";
 export const useModalPopupAtom = () => useAtomValue(modalPopupAtom);
 
 export const useSetModalPopupAtom = () => useSetAtom(modalPopupAtom);
-
-modalPopupAtom;

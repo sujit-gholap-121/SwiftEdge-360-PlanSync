@@ -32,7 +32,7 @@ export default function Sidebar() {
       <div
         className={`flex flex-col flex-grow-0 w-64 bg-gray-800 h-screen group/sidebar ${
           collapseSidepanel ? "max-w-[2px] translate-x-3" : ""
-        }`}
+        } overflow-y-auto`}
       >
         <button
           className={`${

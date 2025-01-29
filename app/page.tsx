@@ -2,22 +2,24 @@
 import Dashboard from "./dashboard/page";
 import DashboardLayout from "./dashboard/layout";
 import { LoginDialog } from "./components/login-dialog";
-import { useAuth } from "./components/AuthProvider";
+
+import { useUserLoginInfo } from "./hooks/useUserLogin";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function Home() {
-  const { user } = useAuth();
-
   // You can optionally show a loading state while redirecting
   // if (!user) {
   //   return <p>Loading</p>;
   // }
+  const loginUser = useUserLoginInfo();
+  console.log("loginuser", loginUser);
 
   return (
-    <>
+    <ProtectedRoute>
       <LoginDialog />
       <DashboardLayout>
         <Dashboard />
       </DashboardLayout>
-    </>
+    </ProtectedRoute>
   );
 }

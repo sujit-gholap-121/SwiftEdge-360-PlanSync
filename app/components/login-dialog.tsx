@@ -1,19 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
-import { useAuth } from "./AuthProvider";
 import LoginForm from "./LoginButton";
-import { User } from "firebase/auth";
 import {
   useModalPopupAtom,
   useSetModalPopupAtom,
 } from "../hooks/useLoginPopupModal";
+import { useAuth } from "../hooks/useAuth2";
 
 export function LoginDialog() {
   const isModalOpen = useModalPopupAtom();
   const setLoginDialogOpen = useSetModalPopupAtom();
-  const { user, loading } = useAuth();
 
   // useEffect(() => {
   //   if (!user) {
