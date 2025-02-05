@@ -49,7 +49,7 @@ export const UserProfileGroup = () => {
 
   const shouldLoadIcon =
     typeof window !== "undefined" &&
-    !!JSON.parse(sessionStorage.getItem("firebaseUser") || "");
+    !!JSON.parse(sessionStorage.getItem("firebaseUser") || "null");
   console.log(user, shouldLoadIcon, showProfileModal);
   return (
     <div className=" top-4 right-4">
